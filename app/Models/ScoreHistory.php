@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class ScoreHistory extends Model
+{
+    protected $table = 'score_history';
+    protected $fillable = ['user_id', 'points', 'description', 'type'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
