@@ -56,7 +56,14 @@ class LogController extends Controller
     public function destroy(Log $log)
     {
         $this->authorize('delete', $log);
+        $categoryName = $log->category->name;
+        $pointsEarned = $log->points_earned;
         $log->delete();
+        Auth::user()->scoreHistory()->create([
+            'points' => -$pointsEarned,
+            'description' => 'Deleted log: ' . $categoryName,
+            'type' => 'deducted',
+        ]);
         return redirect()->route('logs.index')->with('success', 'Log deleted successfully.');
     }
 }

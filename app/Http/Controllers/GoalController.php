@@ -60,7 +60,7 @@ class GoalController extends Controller
 
         $goal->update($validated);
 
-        if ($validated['status'] === 'completed' && $goal->wasChanged('status') === false) {
+        if ($validated['status'] === 'completed' && $goal->wasChanged('status')) {
             Auth::user()->scoreHistory()->create([
                 'points' => 50,
                 'description' => 'Goal completed: ' . $goal->title,
